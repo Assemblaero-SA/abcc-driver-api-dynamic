@@ -278,7 +278,7 @@ EXTFUNC UINT16 ABCC_API_CbfGetNumAdi( void );
 ** in place.
 **------------------------------------------------------------------------------
 */
-EXTVAR const AD_AdiEntryType ABCC_API_asAdiEntryList[];
+EXTVAR AD_AdiEntryType ABCC_API_asAdiEntryList[];
 
 /*------------------------------------------------------------------------------
 ** Default process data map
@@ -296,7 +296,7 @@ EXTVAR const AD_AdiEntryType ABCC_API_asAdiEntryList[];
 ** With a fixed PD map that can go into ROM the 'const' should be left in place.
 **------------------------------------------------------------------------------
 */
-EXTVAR const AD_MapType ABCC_API_asAdObjDefaultMap[];
+EXTVAR AD_MapType ABCC_API_asAdObjDefaultMap[];
 
 /*------------------------------------------------------------------------------
 ** Pre-defined access combiantions of the descriptor bit field (bDesc) in the
