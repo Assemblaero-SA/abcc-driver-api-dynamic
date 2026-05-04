@@ -218,4 +218,18 @@
    #define AD_IA_MIN_MAX_DEFAULT_ENABLE            0
 #endif
 
+/*------------------------------------------------------------------------------
+** ADI callback thread pool (POSIX / Linux targets)
+**------------------------------------------------------------------------------
+*/
+#ifndef ABCC_API_CFG_ADI_CALLBACK_POOL_ENABLED
+   #define ABCC_API_CFG_ADI_CALLBACK_POOL_ENABLED   ( 1 )
+#endif
+#ifndef ABCC_API_CFG_ADI_CALLBACK_POOL_SIZE
+   #define ABCC_API_CFG_ADI_CALLBACK_POOL_SIZE      ( 2 )
+#endif
+#ifndef ABCC_API_CFG_ADI_CALLBACK_POOL_QUEUE
+   #define ABCC_API_CFG_ADI_CALLBACK_POOL_QUEUE     ( 256 )
+#endif
+
 #endif

@@ -16,6 +16,7 @@
 #include "abcc_api.h"
 #include "abcc_hardware_abstraction.h"
 #include "application_data_object.h"
+#include "abcc_api_callback_pool.h"
 
 #define AD_OA_REV_VALUE                        3
 
@@ -1619,16 +1620,15 @@ static void SetAdiValue( const AD_AdiEntryType* psAdiEntry,
                                     bNumElements );
    }
 #if( ABCC_CFG_ADI_GET_SET_CALLBACK_ENABLED )
-   if( psAdiEntry->pnSetAdiValue != NULL )
-   {
-      /*
-      ** If a set callback is registered the user is notified that the ADI is
-      ** updated.
-      */
-      psAdiEntry->pnSetAdiValue( psAdiEntry,
-                                 bNumElements,
-                                 bStartIndex );
-   }
+   /*
+   ** If a set callback is registered the user is notified that the ADI is
+   ** updated. Dispatched through the API callback pool when enabled;
+   ** otherwise invoked synchronously on this thread.
+   */
+   ABCC_API_CallbackPoolDispatch( ABCC_API_CB_KIND_SET,
+                                  psAdiEntry,
+                                  bNumElements,
+                                  bStartIndex );
 #endif
 }
 
@@ -2872,14 +2872,13 @@ void AD_GetAdiValue( const AD_AdiEntryType* psAdiEntry,
 #if( ABCC_CFG_ADI_GET_SET_CALLBACK_ENABLED )
    /*
    ** If a get callback is registered the user is notified that the ADI will be
-   ** read.
+   ** read. Dispatched through the API callback pool when enabled; otherwise
+   ** invoked synchronously on this thread.
    */
-   if( psAdiEntry->pnGetAdiValue != NULL )
-   {
-      psAdiEntry->pnGetAdiValue( psAdiEntry,
-                                 bNumElements,
-                                 bStartIndex );
-   }
+   ABCC_API_CallbackPoolDispatch( ABCC_API_CB_KIND_GET,
+                                  psAdiEntry,
+                                  bNumElements,
+                                  bStartIndex );
 #endif
 
 #if( ABCC_CFG_STRUCT_DATA_TYPE_ENABLED )

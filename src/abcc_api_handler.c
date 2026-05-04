@@ -31,6 +31,7 @@
 #include "abcc_api.h"
 #include "abcc_api_command_handler_lookup.h"
 #include "anybus_file_system_interface_object.h"
+#include "abcc_api_callback_pool.h"
 
 /*------------------------------------------------------------------------------
 ** Comm settings values
@@ -720,6 +721,10 @@ void ABCC_API_RunTimerSystem( const INT16 iDeltaTimeMs )
 
 EXTFUNC ABCC_ErrorCodeType ABCC_API_Init( void )
 {
+   if( !ABCC_API_CallbackPoolInit() )
+   {
+      return( ABCC_EC_INTERNAL_ERROR );
+   }
    return( ABCC_HwInit() );
 }
 
@@ -1020,6 +1025,7 @@ void ABCC_API_SetCommSettings( ABCC_API_CommSettingType eCommSettings1,
 void ABCC_API_Shutdown( void )
 {
    ABCC_HWReset();
+   ABCC_API_CallbackPoolShutdown();
 }
 
 void ABCC_API_Restart( void )
